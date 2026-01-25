@@ -1,0 +1,11 @@
+# .sops.yaml
+keys:
+  - &admin_pc age17mm9fnjn7xgf3l7frdg6k9gepumtfxsfnwszxcjag38z5sjh4plqeazaeq
+  - &server_key age1km64utymfwd9gapx8xtte37vap9lehls337na6xwm7ju0aees5yq7pdeak
+
+creation_rules:
+  - path_regex: secrets/secrets.yaml
+    key_groups:
+    - age:
+      - *admin_pc
+      - *server_key

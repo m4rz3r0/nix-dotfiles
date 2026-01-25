@@ -1,0 +1,8 @@
+# --- SECURITY: Private Keys ---
+server_key.txt
+
+# --- NixOS Artifacts ---
+result
+
+# --- Temporary/Trash Folders ---
+temp-install/
