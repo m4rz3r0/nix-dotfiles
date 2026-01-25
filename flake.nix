@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
+    
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,10 +14,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
+    
+    arkenfox.url = "github:dwarfmaster/arkenfox-nixos";
   };
 
-  outputs = { self, nixpkgs, disko, sops-nix, nixos-facter-modules, ... }: {
+  outputs = { self, nixpkgs, disko, sops-nix, nixos-facter-modules, ... }@inputs: {
     nixosConfigurations = {
 
       # Server
@@ -45,6 +52,7 @@
       # Laptop
       z3r0net-tp = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
         modules = [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops

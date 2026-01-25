@@ -3,7 +3,7 @@
 
   networking.hostName = "z3r0net-server";
 
-  # === Network ===
+  # Network
   networking.networkmanager.enable = false;
   networking.useDHCP = false;
 
@@ -24,7 +24,7 @@
     settings.PermitRootLogin = "prohibit-password"; # Solo llaves
   };
 
-  # === Boot & TPM ===
+  # Boot and TPM
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   
@@ -36,7 +36,7 @@
   # Automatic decrypt
   boot.initrd.luks.devices."crypted".crypttabExtraOpts = [ "tpm2-device=auto" ];
 
-  # === Laptop server mode ===
+  # Laptop server mode
   services.logind.settings.Login.HandleLidSwitch = "ignore"; 
   systemd.targets.sleep.enable = false;
   services.thermald.enable = true;

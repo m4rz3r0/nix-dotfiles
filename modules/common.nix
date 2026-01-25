@@ -15,10 +15,10 @@
   users.groups.multimedia = {};
   users.users.m4rz3r0 = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "video" "render" "multimedia" "podman" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "render" "multimedia" "podman" "adbusers" ];
     hashedPasswordFile = config.sops.secrets.user_pass_hash.path;
     openssh.authorizedKeys.keys = [ 
-       # "ssh-ed25519" 
+       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhFjUYq3Y9E9449DGulPqh9XPSU0cv76U4iINqMyN69" 
     ];
   };
 
