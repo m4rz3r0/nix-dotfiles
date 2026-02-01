@@ -12,7 +12,7 @@
   boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   # Restrict unprivileged user namespaces
   boot.kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
 
@@ -21,7 +21,7 @@
   # ==========================================
   # Networking
   # ==========================================
-  networking.hostName = "z3r0net";
+  networking.hostName = "z3r0net-tp";
   networking.networkmanager.enable = true;
 
   # Secure DNS (Quad9 via TLS)
@@ -58,7 +58,7 @@
     gnome-calculator gnome-console gnome-text-editor baobab
     gnome-initial-setup simple-scan
   ];
-  
+
   # Required for GNOME settings daemon
   services.udev.packages = with pkgs; [ gnome-settings-daemon ];
 

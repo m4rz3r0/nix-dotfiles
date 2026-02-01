@@ -12,21 +12,23 @@
     # System utilities
     fastfetch btop ripgrep unzip p7zip micro file-roller
     android-tools nixd any-nix-shell
-    
+
     # Applications
     discord mpv onlyoffice-desktopeditors github-desktop antigravity
-    
+
     # GNOME extensions
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
     gnomeExtensions.gsconnect
+    nautilus-open-any-terminal
 
     # Fonts
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
-    
+
     # Terminal emulators
-    alacritty grc
+    alacritty
+    grc
   ];
 
   # ==========================================
@@ -48,7 +50,7 @@
   # ==========================================
   # Application configuration
   # ==========================================
-  
+
   # Git configuration
   programs.git = {
     enable = true;
@@ -64,7 +66,7 @@
     };
   };
 
-  
+
 
   # Alacritty configuration
   programs.alacritty = {
