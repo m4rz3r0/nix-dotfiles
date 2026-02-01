@@ -12,16 +12,14 @@
   boot.kernelPackages = pkgs.linuxPackages_hardened;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   # Restrict unprivileged user namespaces
   boot.kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
-
-  # Note: LUKS encryption is handled by Disko in standard.nix
 
   # ==========================================
   # Networking
   # ==========================================
-  networking.hostName = "z3r0net";
+  networking.hostName = "z3r0net-tp";
   networking.networkmanager.enable = true;
 
   # Secure DNS (Quad9 via TLS)
@@ -51,14 +49,23 @@
 
   # Remove unused default GNOME applications
   environment.gnome.excludePackages = with pkgs; [
-    cheese evince geary gnome-backgrounds gnome-bluetooth gnome-calendar
+    cheese evince geary gnome-backgrounds gnome-calendar
     gnome-characters gnome-clocks gnome-connections gnome-contacts
     gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-online-accounts
     gnome-photos gnome-tour gnome-user-docs gnome-weather snapshot totem yelp
     gnome-calculator gnome-console gnome-text-editor baobab
     gnome-initial-setup simple-scan
   ];
-  
+
+  # Nautilus quick preview
+  services.gnome.sushi.enable = true;
+
+  # Nautilus open with terminal
+  programs.nautilus-open-any-terminal = {
+    enable = true;
+    terminal = "alacritty";
+  };
+
   # Required for GNOME settings daemon
   services.udev.packages = with pkgs; [ gnome-settings-daemon ];
 

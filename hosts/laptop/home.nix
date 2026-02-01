@@ -1,6 +1,11 @@
 { config, pkgs, inputs, ... }:
 
 {
+  imports = [
+    # Import the nix-flatpak module
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
+  ];
+
   # User identity
   home.username = "m4rz3r0";
   home.homeDirectory = "/home/m4rz3r0";
@@ -12,22 +17,49 @@
     # System utilities
     fastfetch btop ripgrep unzip p7zip micro file-roller
     android-tools nixd any-nix-shell
-    
+
     # Applications
     discord mpv onlyoffice-desktopeditors github-desktop antigravity
-    
+
     # GNOME extensions
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
     gnomeExtensions.gsconnect
+    nautilus-python
 
     # Fonts
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
-    
+
     # Terminal emulators
-    alacritty grc
+    alacritty
+    grc
   ];
+
+  # Flatpak
+  services.flatpak = {
+    enable = true;
+
+    # Clean up unused Flatpaks automatically
+    uninstallUnmanaged = true;
+
+    packages = [
+      "com.spotify.Client"
+      "io.github.milkshiift.GoofCord"
+      "de.philippun1.turtle"
+    ];
+
+    overrides = {
+      "com.spotify.Client" = {
+        Context = {
+          # Force Wayland (if you use Wayland)
+          sockets = ["wayland" "!x11" "!fallback-x11"];
+          # Revoke access to home folder (improves privacy)
+          filesystems = ["!home"];
+        };
+      };
+    };
+  };
 
   # ==========================================
   # Scripts (Hacking environments)
@@ -48,7 +80,7 @@
   # ==========================================
   # Application configuration
   # ==========================================
-  
+
   # Git configuration
   programs.git = {
     enable = true;
@@ -63,8 +95,6 @@
       };
     };
   };
-
-  
 
   # Alacritty configuration
   programs.alacritty = {
@@ -152,15 +182,17 @@
   # GNOME settings (dconf)
   dconf = {
     enable = true;
-    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
-    settings."org/gnome/desktop/wm/preferences".button-layout = ":minimize,maximize,close";
-    settings."org/gnome/shell" = {
-      disable-user-extensions = false;
-      enabled-extensions = with pkgs.gnomeExtensions; [
-        blur-my-shell.extensionUuid
-        gsconnect.extensionUuid
-        appindicator.extensionUuid
-      ];
+    settings = {
+      "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      "org/gnome/desktop/wm/preferences".button-layout = ":minimize,maximize,close";
+      "org/gnome/shell" = {
+        disable-user-extensions = false;
+        enabled-extensions = with pkgs.gnomeExtensions; [
+          blur-my-shell.extensionUuid
+          gsconnect.extensionUuid
+          appindicator.extensionUuid
+        ];
+      };
     };
   };
 
