@@ -67,6 +67,7 @@
         key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhFjUYq3Y9E9449DGulPqh9XPSU0cv76U4iINqMyN69";
         signByDefault = true;
       };
+      merge.ff = false;
     };
   };
 
