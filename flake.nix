@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,11 +20,13 @@
     };
 
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
-    
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+
     arkenfox.url = "github:dwarfmaster/arkenfox-nixos";
   };
 
-  outputs = { self, nixpkgs, disko, sops-nix, nixos-facter-modules, ... }@inputs: {
+  outputs = { self, nixpkgs, disko, sops-nix, nixos-facter-modules, nix-flatpak, ... }@inputs: {
     nixosConfigurations = {
 
       # Server
@@ -34,13 +36,13 @@
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           nixos-facter-modules.nixosModules.facter
-          
+
           ./modules/common.nix
           ./modules/disks/standard.nix
           ./hosts/server/default.nix
-          
+
           {
-            config.facter.reportPath = 
+            config.facter.reportPath =
               if builtins.pathExists ./hosts/server/facter.json then
                 ./hosts/server/facter.json
               else
@@ -63,7 +65,7 @@
           ./hosts/laptop/default.nix
 
           {
-            config.facter.reportPath = 
+            config.facter.reportPath =
               if builtins.pathExists ./hosts/laptop/facter.json then
                 ./hosts/laptop/facter.json
               else
@@ -85,7 +87,7 @@
           ./hosts/pc/default.nix
 
           {
-            config.facter.reportPath = 
+            config.facter.reportPath =
               if builtins.pathExists ./hosts/pc/facter.json then
                 ./hosts/pc/facter.json
               else
