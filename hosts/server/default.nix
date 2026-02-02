@@ -28,7 +28,8 @@
           {
             "provider": "cloudflare",
             "zone_identifier": "${config.sops.placeholder.zone_identifier}",
-            "domain": "vpn.m4rz3r0.net",
+            "domain": "m4rz3r0.net",
+            "host": "vpn",
             "ttl": 600,
             "token": "${config.sops.placeholder.cloudflare_token}",
             "ip_version": "ipv4",
@@ -43,7 +44,7 @@
   services.ddns-updater = {
     enable = true;
     environment = {
-      SERVER_ENABLED="no";
+      SERVER_ENABLED="yes";
       CONFIG_FILEPATH = config.sops.templates."ddns-config.json".path;
       PERIOD = "5m";
     };
