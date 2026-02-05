@@ -1,6 +1,10 @@
 { config, pkgs, inputs, ... }:
 
 {
+  imports = [
+    inputs.autofirma-nix.homeManagerModules.default
+  ];
+
   # User identity
   home.username = "m4rz3r0";
   home.homeDirectory = "/home/m4rz3r0";
@@ -133,8 +137,13 @@
         "{446900e4-71c2-419f-a6a7-df9c091e268b}" = { install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi"; installation_mode = "force_installed"; };
         "jid1-MnnxcxisBPnSXQ@jetpack" = { install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi"; installation_mode = "force_installed"; };
       };
+      SecurityDevices = {
+        "OpenSC PKCS11" = "${pkgs.opensc}/lib/opensc-pkcs11.so";
+        "DNIeRemote" = "${config.programs.dnieremote.finalPackage}/lib/libdnieremotepkcs11.so";
+      };
     };
     profiles.default = {
+      id = 0;
       isDefault = true;
       # Load Arkenfox user.js from input
       extraConfig = pkgs.lib.readFile "${pkgs.arkenfox-userjs}/user.js";
@@ -153,6 +162,26 @@
         "widget.disable-workspace-management" = true;
       };
       search = { force = true; default = "ddg"; order = [ "ddg" "google" ]; };
+    };
+  };
+
+  # Enable AutoFirma with Firefox integration
+  programs.autofirma = {
+    enable = true;
+    firefoxIntegration.profiles = {
+      default = {
+        enable = true;
+      };
+    };
+  };
+
+  # FNMT certificate configurator
+  programs.configuradorfnmt = {
+    enable = true;
+    firefoxIntegration.profiles = {
+      default = {
+        enable = true;
+      };
     };
   };
 

@@ -19,6 +19,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    autofirma-nix = {
+      # url = "github:nix-community/autofirma-nix";  # For nixpkgs-unstable
+      url = "path:/home/m4rz3r0/autofirma-nix"; # Temp fix
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
@@ -26,6 +32,15 @@
     arkenfox.url = "github:dwarfmaster/arkenfox-nixos";
   };
 
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+  
   outputs = { self, nixpkgs, disko, sops-nix, nixos-facter-modules, nix-flatpak, ... }@inputs: {
     nixosConfigurations = {
 
