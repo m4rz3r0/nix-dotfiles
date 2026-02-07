@@ -84,6 +84,12 @@
   services.flatpak.enable = true;
   services.printing.enable = false;
 
+  # Run compiled binaries
+  programs.nix-ld = {
+    enable = true;
+  };
+  
+
   # ==========================================
   # Home Manager integration
   # ==========================================
